@@ -1,8 +1,14 @@
-# OS / editor noise
-.DS_Store
-Thumbs.db
-*.swp
 
+# OS / editor noise
 # local scratch
-node_modules/
 *.log
+*.pyc
+*.swp
+.DS_Store
+.env
+.env.*
+.venv/
+Thumbs.db
+__pycache__/
+dist/*.tmp
+node_modules/
