@@ -1,0 +1,260 @@
+/* Before/after drag-handle slider — no frameworks, no build step, no metrics. */
+
+:root {
+  --ba-pos: 50%;
+  --ink: #1b1a17;
+  --paper: #faf7f2;
+  --accent: #8a4b2a; /* warm terracotta, AA on --paper */
+  --line: #d8d2c6;
+  --label-bg: rgba(20, 19, 17, 0.78);
+  --label-fg: #ffffff; /* white on --label-bg stays 7+:1 on any photo */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  overflow-x: clip; /* guard the full-bleed cover stage against horizontal scroll */
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.55;
+}
+
+.ba-wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.ba-header h1 {
+  margin: 0.4rem 0 0.2rem;
+  font-size: 1.7rem;
+  line-height: 1.2;
+}
+
+.ba-header p {
+  margin: 0.3rem 0;
+  max-width: 60ch;
+}
+
+.ba-keyboard-hint kbd {
+  display: inline-block;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 0 0.35em;
+  font-family: inherit;
+  font-size: 0.85em;
+  background: #fff;
+}
+
+/* ---------- cards and stages ---------- */
+
+.ba-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1.4rem 0;
+}
+
+.ba-card-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.25rem;
+}
+
+.ba-card-desc {
+  margin: 0 0 0.75rem;
+  color: #454239;
+}
+
+.ba-stage {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ece6da;
+  cursor: ew-resize;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.ba-stage--cover {
+  margin-inline: calc(50% - 50vw); /* cover-bleed: photos run edge to edge */
+  width: 100vw;
+  aspect-ratio: 16 / 9;
+  border-radius: 0;
+}
+
+.ba-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* The "before" photo is clipped from the right edge down to the handle. */
+.ba-before-wrap {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 calc(100% - var(--ba-pos)) 0 0);
+  -webkit-clip-path: inset(0 calc(100% - var(--ba-pos)) 0 0);
+}
+
+/* ---------- drag handle ---------- */
+
+.ba-handle {
+  position: absolute;
+  top: 0;
+  left: var(--ba-pos);
+  transform: translateX(-50%);
+  height: 100%;
+  width: 20px;
+  cursor: ew-resize;
+  outline: none;
+  touch-action: none;
+}
+
+.ba-handle-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  transform: translateX(-50%);
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(20, 19, 17, 0.55);
+}
+
+.ba-handle-grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--ink);
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  box-shadow: 0 2px 8px rgba(20, 19, 17, 0.35);
+}
+
+.ba-handle-grip svg {
+  pointer-events: none;
+}
+
+.ba-handle:hover .ba-handle-grip,
+.ba-stage:focus-within .ba-handle-grip {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* High-visibility focus ring: dark ring + light ring works on any photo. */
+.ba-handle:focus-visible {
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--accent);
+  border-radius: 999px;
+}
+
+/* ---------- labels: white on dark scrim, safe over any photo ---------- */
+
+.ba-label {
+  position: absolute;
+  top: 0;
+  padding: 0.3rem 0.55rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--label-fg);
+  background: var(--label-bg);
+  border-radius: 0 0 6px 6px;
+  z-index: 2;
+}
+
+.ba-label--before {
+  left: 0;
+}
+
+.ba-label--after {
+  right: 0;
+}
+
+.ba-pct {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- missing-photo placeholders ---------- */
+
+.ba-stage--missing .ba-missing,
+.ba-missing {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  margin: 0;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.8rem;
+  color: #fff;
+  background: rgba(120, 32, 12, 0.85); /* warm dark red, white text is 7:1 */
+}
+
+/* ---------- hint + footer ---------- */
+
+.ba-hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  color: #454239;
+}
+
+.ba-hint-code {
+  font-size: 0.78rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0.05rem 0.3rem;
+}
+
+.ba-footer {
+  border-top: 1px solid var(--line);
+  margin-top: 2rem;
+  padding-top: 1rem;
+  font-size: 0.85rem;
+  color: #454239;
+}
+
+.ba-footer a {
+  color: var(--accent);
+}
+
+ /* Motion: respect people who turn it off. */
+@media (prefers-reduced-motion: reduce) {
+  .ba-handle,
+  .ba-handle-grip {
+    transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .ba-card {
+    padding: 0.75rem;
+  }
+
+  .ba-stage--cover {
+    aspect-ratio: 4 / 3; /* keep a wide but usable stage on phones */
+  }
+}

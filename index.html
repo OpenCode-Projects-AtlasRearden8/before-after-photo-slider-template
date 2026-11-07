@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Before &amp; After Photo Slider</title>
+  <meta name="description" content="A static, no-backend template that pairs two aligned photos with a drag-handle before/after slider. Keyboard accessible, no analytics, no metrics.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="sets.js" defer></script>
+  <script src="slider.js" defer></script>
+</head>
+<body>
+  <div class="ba-wrap">
+    <header class="ba-header">
+      <h1>Before &amp; After Photo Slider</h1>
+      <p>
+        Two aligned photos, one drag handle. Pair two images with the same name
+        convention — <span class="ba-hint-code">before.jpg</span> and
+        <span class="ba-hint-code">after.jpg</span> — in a folder, list the folder
+        in <span class="ba-hint-code">sets.js</span>, and this page shows the
+        comparison. Static files only: no backend, no uploads, no analytics, no metrics.
+      </p>
+      <p class="ba-keyboard-hint">
+        Use the keyboard: focus a handle and press
+        <kbd>ArrowLeft</kbd>/<kbd>ArrowRight</kbd> to move it,
+        <kbd>Home</kbd>/<kbd>End</kbd> to jump to fully after/before.
+      </p>
+    </header>
+
+    <noscript>
+      <p>
+        This comparison slider needs JavaScript enabled, but the photos live in
+        plain folders (one folder per set, each containing
+        <span class="ba-hint-code">before.jpg</span> and
+        <span class="ba-hint-code">after.jpg</span>) — you can always browse them
+        directly.
+      </p>
+    </noscript>
+
+    <main id="ba-sets"></main>
+
+    <footer class="ba-footer">
+      <p>
+        A free template by
+        <a href="https://dylanasdale.github.io" rel="noopener">Asdale Dynamics, LLC</a>.
+        MIT licensed — copy it, customize it, publish it on GitHub Pages.
+        No data is collected from visitors.
+      </p>
+    </footer>
+  </div>
+</body>
+</html>

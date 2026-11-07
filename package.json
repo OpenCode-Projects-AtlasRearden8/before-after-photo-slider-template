@@ -1,0 +1,11 @@
+{
+  "name": "before-after-photo-slider-template",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static GitHub Pages template: two aligned photos, one drag-handle before/after slider. No backend, no metrics.",
+  "scripts": {
+    "test": "node test/run-tests.mjs"
+  },
+  "license": "MIT",
+  "author": "Asdale Dynamics, LLC"
+}
